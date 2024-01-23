@@ -19,10 +19,46 @@ class MyApp extends StatelessWidget {
               TestRadioButton(),
               TestSlider(),
               TestSwitch(),
+              PopUpMenu(),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+enum TestWidgetValue {
+  test1,
+  test2,
+  test3;
+}
+
+class PopUpMenu extends StatefulWidget {
+  const PopUpMenu({super.key});
+
+  @override
+  State<PopUpMenu> createState() => _PopUpMenuState();
+}
+
+class _PopUpMenuState extends State<PopUpMenu> {
+  TestWidgetValue? selectValue;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(selectValue?.name ?? "선택 안됨"),
+        PopupMenuButton(
+          itemBuilder: (context) {
+            return TestWidgetValue.values
+                .map((value) =>
+                    PopupMenuItem(value: value, child: Text(value.name)))
+                .toList();
+          },
+          onSelected: (newValue) => setState(() => selectValue = newValue)
+        ),
+      ],
     );
   }
 }
@@ -47,8 +83,12 @@ class _TestSwitchState extends State<TestSwitch> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Switch(value: value, onChanged: (newValue) => setState(() => value = newValue)),
-        CupertinoSwitch(value: value, onChanged: (newValue) => setState(() => value = newValue)),
+        Switch(
+            value: value,
+            onChanged: (newValue) => setState(() => value = newValue)),
+        CupertinoSwitch(
+            value: value,
+            onChanged: (newValue) => setState(() => value = newValue)),
       ],
     );
   }
@@ -87,12 +127,6 @@ class _TestSliderState extends State<TestSlider> {
   }
 }
 
-enum TestRadioValue {
-  test1,
-  test2,
-  test3;
-}
-
 class TestRadioButton extends StatefulWidget {
   const TestRadioButton({super.key});
 
@@ -101,51 +135,51 @@ class TestRadioButton extends StatefulWidget {
 }
 
 class _TestRadioButtonState extends State<TestRadioButton> {
-  TestRadioValue? selectValue;
+  TestWidgetValue? selectValue;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         ListTile(
-          title: Text(TestRadioValue.test1.name),
+          title: Text(TestWidgetValue.test1.name),
           onTap: () {
             setState(() {
-              if (selectValue != TestRadioValue.test1) {
-                selectValue = TestRadioValue.test1;
+              if (selectValue != TestWidgetValue.test1) {
+                selectValue = TestWidgetValue.test1;
               }
             });
           },
-          leading: Radio<TestRadioValue>(
-              value: TestRadioValue.test1,
+          leading: Radio<TestWidgetValue>(
+              value: TestWidgetValue.test1,
               groupValue: selectValue,
               onChanged: (value) => setState(() => selectValue = value!)),
         ),
         ListTile(
-          title: Text(TestRadioValue.test2.name),
+          title: Text(TestWidgetValue.test2.name),
           onTap: () {
             setState(() {
-              if (selectValue != TestRadioValue.test2) {
-                selectValue = TestRadioValue.test2;
+              if (selectValue != TestWidgetValue.test2) {
+                selectValue = TestWidgetValue.test2;
               }
             });
           },
-          leading: Radio<TestRadioValue>(
-              value: TestRadioValue.test2,
+          leading: Radio<TestWidgetValue>(
+              value: TestWidgetValue.test2,
               groupValue: selectValue,
               onChanged: (value) => setState(() => selectValue = value!)),
         ),
         ListTile(
-          title: Text(TestRadioValue.test3.name),
+          title: Text(TestWidgetValue.test3.name),
           onTap: () {
             setState(() {
-              if (selectValue != TestRadioValue.test3) {
-                selectValue = TestRadioValue.test3;
+              if (selectValue != TestWidgetValue.test3) {
+                selectValue = TestWidgetValue.test3;
               }
             });
           },
-          leading: Radio<TestRadioValue>(
-              value: TestRadioValue.test3,
+          leading: Radio<TestWidgetValue>(
+              value: TestWidgetValue.test3,
               groupValue: selectValue,
               onChanged: (value) => setState(() => selectValue = value!)),
         ),
